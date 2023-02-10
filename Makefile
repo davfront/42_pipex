@@ -39,7 +39,14 @@ NAME				=	pipex
 SRCS_DIR			=	./src
 OBJS_DIR			=	./obj
 
-SRCS_FILES			=	pipex.c\
+SRCS_FILES			=	\
+						utils/pip_open_file.c\
+						utils/pip_close_file.c\
+						utils/pip_error_exit.c\
+						\
+						input/pip_get_input.c\
+						\
+						pipex.c\
 
 SRCS				=	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 OBJS_FILES			=	$(SRCS_FILES:.c=.o)

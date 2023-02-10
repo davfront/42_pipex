@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/10 11:45:20 by dapereir          #+#    #+#              #
-#    Updated: 2023/02/10 11:16:16 by dapereir         ###   ########.fr        #
+#    Updated: 2023/02/10 12:51:56 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,6 +69,7 @@ SRCS_FILES			=	char/ft_isalpha.c\
 						str/ft_strchr.c\
 						str/ft_strrchr.c\
 						str/ft_strncmp.c\
+						str/ft_streq.c\
 						str/ft_strnstr.c\
 						str/ft_atoi.c\
 						str/ft_strdup.c\
