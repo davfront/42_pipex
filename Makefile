@@ -39,7 +39,7 @@ NAME				=	pipex
 SRCS_DIR			=	./src
 OBJS_DIR			=	./obj
 
-SRCS_FILES			=	src/pipex.c\
+SRCS_FILES			=	pipex.c\
 
 SRCS				=	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 OBJS_FILES			=	$(SRCS_FILES:.c=.o)
