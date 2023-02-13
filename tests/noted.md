@@ -17,11 +17,11 @@ equivalent to:
 
 ```
 # pipex
-./pipex tests/prenoms.txt "grep al" "wc -l" tests.result.txt
+./pipex tests/prenoms.txt "grep al" "wc -l" tests/result.txt
 ```
 
 ```
 #pipe
-< tests/prenoms.txt grep al | wc -l > tests.result.txt
+< tests/prenoms.txt grep al | wc -l > tests/result.txt
 
 ```

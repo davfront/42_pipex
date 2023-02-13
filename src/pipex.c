@@ -6,17 +6,52 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/10 17:03:33 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:30:09 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+char	*pip_cmd_path(char *cmd, char **envp)
+{
+	char	**env;
+	char	**pathes;
+	char	*dir_path;
+	char	*cmd_path;
+
+	env = envp;
+	while (env && *env)
+	{
+		if (ft_strnstr(*env, "PATH=", 5) == *env)
+		{
+			pathes = ft_split(*env + 5, ':');
+			while (*pathes)
+			{
+				dir_path = ft_strjoin(*pathes, "/");
+				cmd_path = ft_strjoin(dir_path, cmd);
+				free(dir_path);
+				if (access(cmd_path, F_OK) == 0)
+					return (cmd_path);
+				free(cmd_path);
+				pathes++;
+			}
+			return (*env);
+		}
+		env++;
+	}
+	return (NULL);
+}
+
 void	pip_execute(char *cmd, char **envp)
 {
 	char	**cmd_argv;
+	char	*cmd_path;
 
 	cmd_argv = ft_split(cmd, ' ');
+	cmd_path = pip_cmd_path(cmd_argv[0], envp);
+	execve(cmd_path, cmd_argv, envp);
+	free(cmd_path);
+	free(cmd_argv);
 }
 
 void	pip_child_process(t_pip *pip)
@@ -51,7 +86,8 @@ int	main(int argc, char **argv, char **envp)
     if (pipe(pip.fd_pipe) == -1)
 		pip_error_exit("pipe failed");
     cpid = fork();
-	pip_error_exit_if("fork failed", cpid == -1);
+	if (cpid == -1)
+		pip_error_exit("fork failed");
 	if (cpid == 0)
 		pip_child_process(&pip);
 	else
