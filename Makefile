@@ -21,8 +21,9 @@ YELLOW				=	\033[0;33m
 YELLOW_BOLD			=	\033[1;33m
 CYAN				=	\033[0;36m
 CYAN_BOLD			=	\033[1;36m
-EOC					=	\033[0m
 BOLD				=	\033[1m
+FAINT				=	\033[2m
+EOC					=	\033[0m
 
 
 # COMMANDS
@@ -30,6 +31,13 @@ BOLD				=	\033[1m
 CC					=	cc
 CFLAGS				=	-Wall -Wextra -Werror
 RM					=	rm -rf
+
+SILENTFLAG			= 	$(if $(filter s, $(MAKEFLAGS)),1,0)
+ifeq ($(SILENTFLAG),1)
+ECHO				=	\#
+else
+ECHO				=	echo
+endif
 
 
 # PROJECT
@@ -66,30 +74,33 @@ all:				$(NAME)
 
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c Makefile $(FT) $(HEADER)
 					@mkdir -p $(@D)
-					@echo "$(GREEN_BOLD)create %.o ➞$(EOC) $@"
+					@$(ECHO) "$(GREEN)[create]$(EOC) $@"
 					@$(CC) $(CFLAGS) $(HEADER_INC) $(FT_INC) -c $< -o $@
 
 $(NAME):			$(OBJS) $(FT)
-					@echo "$(GREEN_BOLD)create exe ➞$(EOC) $@"
+					@$(ECHO) "$(GREEN)[create]$(EOC) $@"
 					@$(CC) $(CFLAGS) $(OBJS) $(FT_FLAGS) -o $(NAME)
+					@$(ECHO) "$(GREEN_BOLD)✓ $(NAME) is ready!$(EOC)"
 
 $(FT):
-					@echo "$(GREEN_BOLD)create lib ➞$(EOC) $@"
-					@$(MAKE) --no-print-directory -s -C $(FT_DIR)
+					@$(ECHO) "$(CYAN)[enter directory]$(EOC) $(FT_DIR)"
+					@$(MAKE) --no-print-directory -C $(FT_DIR)
+					@$(ECHO) "$(CYAN)[leave directory]$(EOC) $(FT_DIR)"
 
 .PHONY: clean
 clean:
-					@echo "$(RED_BOLD)delete %.o ➞$(EOC) $(OBJS_DIR)"
+					@$(ECHO) "$(RED)[delete]$(EOC) $(OBJS_DIR)"
 					@$(RM) $(OBJS_DIR)
-					@echo "$(RED_BOLD)delete %.o ➞$(EOC) $(FT_DIR)"
+					@$(ECHO) "$(RED)[delete]$(EOC) $(FT_DIR)"
 					@$(MAKE) --no-print-directory -s -C $(FT_DIR) clean
 
 .PHONY: fclean
 fclean:				clean
-					@echo "$(RED_BOLD)delete lib ➞$(EOC) $(FT)"
+					@$(ECHO) "$(RED)[delete]$(EOC) $(FT)"
 					@$(MAKE) --no-print-directory -s -C $(FT_DIR) fclean
-					@echo "$(RED_BOLD)delete exe ➞$(EOC) $(NAME)"
+					@$(ECHO) "$(RED)[delete]$(EOC) $(NAME)"
 					@$(RM) $(NAME)
+					@$(ECHO) "$(RED_BOLD)✓ $(NAME) is fully cleaned!$(EOC)"
 
 .PHONY: re
 re:					fclean
