@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/10 11:45:20 by dapereir          #+#    #+#              #
-#    Updated: 2023/02/10 12:51:56 by dapereir         ###   ########.fr        #
+#    Updated: 2023/02/13 16:40:03 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,9 @@ YELLOW				=	\033[0;33m
 YELLOW_BOLD			=	\033[1;33m
 CYAN				=	\033[0;36m
 CYAN_BOLD			=	\033[1;36m
-EOC					=	\033[0m
 BOLD				=	\033[1m
+FAINT				=	\033[2m
+EOC					=	\033[0m
 
 
 # COMMANDS
@@ -100,6 +101,7 @@ SRCS_FILES			=	char/ft_isalpha.c\
 						lst/ft_lstclear.c\
 						lst/ft_lstiter.c\
 						lst/ft_lstmap.c\
+						lst/ft_lst_by_index.c\
 						\
 						gnl/ft_gnl.c\
 						\
@@ -121,25 +123,26 @@ HEADER_INC			=	-I $(HEADER_DIR)
 
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c Makefile $(HEADER)
 					@mkdir -p $(@D)
-					@$(ECHO) "$(GREEN_BOLD)create %.o ➞$(EOC) $@"
+					@$(ECHO) "$(GREEN)[create]$(EOC) $@"
 					@$(CC) $(CFLAGS) $(HEADER_INC) -c $< -o $@
 
 .PHONY: all
 all:				$(NAME)
 
 $(NAME):			$(OBJS)
-					@$(ECHO) "$(GREEN_BOLD)create lib ➞$(EOC) $@"
+					@$(ECHO) "$(GREEN)[create]$(EOC) $@"
 					@$(AR) $(NAME) $(OBJS)
-
+					@$(ECHO) "$(GREEN_BOLD)✓ libft is ready!$(EOC)"
 .PHONY: clean
 clean:
-					@$(ECHO) "$(RED_BOLD)delete %.o ➞$(EOC) $(OBJS_DIR)"
+					@$(ECHO) "$(RED)[delete]$(EOC) $(OBJS_DIR)"
 					@$(RM) $(OBJS)
 
 .PHONY: fclean
 fclean:				clean
-					@$(ECHO) "$(RED_BOLD)delete lib ➞$(EOC) $(NAME)"
+					@$(ECHO) "$(RED)[delete]$(EOC) $(NAME)"
 					@$(RM) $(NAME)
+					@$(ECHO) "$(RED_BOLD)✓ libft is fully cleaned!$(EOC)"
 
 .PHONY: re
 re:					fclean
