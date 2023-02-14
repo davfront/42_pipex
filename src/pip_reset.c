@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pip_error_exit.c                                   :+:      :+:    :+:   */
+/*   pip_reset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/22 15:05:20 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/10 12:34:37 by dapereir         ###   ########.fr       */
+/*   Created: 2023/02/14 10:53:39 by dapereir          #+#    #+#             */
+/*   Updated: 2023/02/14 11:26:08 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	pip_error_exit(char *msg)
+void	pip_reset(t_pip *pip)
 {
-	ft_putstr_fd("ERROR: ", STDERR_FILENO);
-	if (msg && *msg)
-		ft_putendl_fd(msg, STDERR_FILENO);
-	else
-		perror(NULL);
-	exit(EXIT_FAILURE);
-}
-
-void	pip_error_exit_if(char *msg, int condition)
-{
-	if (condition)
-		pip_error_exit(msg);
+	if (pip->fd_in != -1)
+		close(pip->fd_in);
+	if (pip->fd_out != -1)
+		close(pip->fd_out);
 }

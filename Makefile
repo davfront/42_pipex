@@ -48,12 +48,12 @@ SRCS_DIR			=	./src
 OBJS_DIR			=	./obj
 
 SRCS_FILES			=	\
-						utils/pip_open_file.c\
-						utils/pip_close_file.c\
-						utils/pip_error_exit.c\
-						\
-						input/pip_get_input.c\
-						\
+						pip_init.c\
+						pip_reset.c\
+						pip_error_exit.c\
+						pip_perror_exit.c\
+						pip_get_input.c\
+						pip_execute.c\
 						pipex.c\
 
 SRCS				=	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))

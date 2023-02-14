@@ -1,19 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pip_close_file.c                                   :+:      :+:    :+:   */
+/*   pip_perror_exit.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/10 12:10:03 by dapereir         ###   ########.fr       */
+/*   Created: 2022/12/22 15:05:20 by dapereir          #+#    #+#             */
+/*   Updated: 2023/02/14 12:31:33 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	pip_close_file(int fd)
+void	pip_perror_exit(t_pip *pip, char *msg)
 {
-	if (close(fd) == -1)
-		pip_error_exit(NULL);
+	ft_putstr_fd(strerror(errno), STDERR_FILENO);
+	if (msg && *msg)
+	{
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(msg, STDERR_FILENO);
+	}
+	ft_putstr_fd("\n", STDERR_FILENO);
+	pip_reset(pip);
+	exit(EXIT_FAILURE);
+}
+
+void	pip_perror_exit_if(t_pip *pip, char *msg, int condition)
+{
+	if (condition)
+		pip_perror_exit(pip, msg);
 }

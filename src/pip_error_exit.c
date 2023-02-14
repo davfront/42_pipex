@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pip_open_file.c                                    :+:      :+:    :+:   */
+/*   pip_error_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/16 01:34:49 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/10 12:10:49 by dapereir         ###   ########.fr       */
+/*   Created: 2022/12/22 15:05:20 by dapereir          #+#    #+#             */
+/*   Updated: 2023/02/14 12:27:51 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	pip_open_file(char *path)
+void	pip_error_exit(t_pip *pip, char *msg)
 {
-	int		fd;
+	if (msg && *msg)
+		ft_putendl_fd(msg, STDERR_FILENO);
+	pip_reset(pip);
+	exit(EXIT_FAILURE);
+}
 
-	fd = open(path, O_RDONLY);
-	if (fd == -1)
-		pip_error_exit(NULL);
-	return (fd);
+void	pip_error_exit_if(t_pip *pip, char *msg, int condition)
+{
+	if (condition)
+		pip_error_exit(pip, msg);
 }
