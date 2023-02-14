@@ -6,7 +6,7 @@
 #    By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/10 11:45:20 by dapereir          #+#    #+#              #
-#    Updated: 2023/02/13 16:40:03 by dapereir         ###   ########.fr        #
+#    Updated: 2023/02/14 13:41:17 by dapereir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,6 @@ SRCS_FILES			=	char/ft_isalpha.c\
 						str/ft_strchr.c\
 						str/ft_strrchr.c\
 						str/ft_strncmp.c\
-						str/ft_streq.c\
 						str/ft_strnstr.c\
 						str/ft_atoi.c\
 						str/ft_strdup.c\
@@ -79,9 +78,11 @@ SRCS_FILES			=	char/ft_isalpha.c\
 						str/ft_strjoin.c\
 						str/ft_strtrim.c\
 						str/ft_split.c\
+						str/ft_free_split.c\
 						str/ft_itoa.c\
 						str/ft_strmapi.c\
 						str/ft_striteri.c\
+						str/ft_streq.c\
 						\
 						write/ft_putchar_fd.c\
 						write/ft_putchar.c\

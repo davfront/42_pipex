@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_streq.c                                         :+:      :+:    :+:   */
+/*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 12:14:09 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/14 13:44:20 by dapereir         ###   ########.fr       */
+/*   Created: 2022/11/14 00:48:39 by dapereir          #+#    #+#             */
+/*   Updated: 2023/02/14 14:25:23 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_streq(const char *s1, const char *s2)
+void	ft_free_split(char **strs)
 {
-	if (s1 == NULL)
-		return (s2 == NULL);
-	return (ft_strncmp(s1, s2, ft_strlen(s1) + 1) == 0);
+	size_t	i;
+
+	i = 0;
+	while (strs[i])
+	{
+		free(strs[i]);
+		strs[i] = NULL;
+		i++;
+	}
+	free(strs);
 }
