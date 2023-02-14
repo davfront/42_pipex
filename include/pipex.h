@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/14 12:29:24 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:05:27 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 typedef struct s_pip {
 	int		fd_in;
 	int		fd_out;
-	int		fd_pipe[2];
-	char	*cmd1;
-	char	*cmd2;
+	int		cmd_size;
+	char	**cmd;
+	int		*fd_pipe;
 	char	**envp;
 }				t_pip;
 
@@ -35,7 +35,7 @@ void	pip_error_exit(t_pip *pip, char *msg);
 void	pip_error_exit_if(t_pip *pip, char *msg, int condition);
 void	pip_perror_exit(t_pip *pip, char *msg);
 void	pip_perror_exit_if(t_pip *pip, char *msg, int condition);
-void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp);
 void	pip_execute(t_pip *pip, char *cmd, char **envp);
+void	pip_pipe(t_pip *pip, int level);
 
 #endif

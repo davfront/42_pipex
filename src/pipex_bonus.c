@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/16 12:18:21 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:25:01 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ static void	pip_check_input(t_pip *pip, int argc, char **argv)
 		ft_streq(argv[1], "--help"))))
 	{
 		ft_printf(\
-"USAGE: %s [input_file] [command_1] [command_2] [output_file]\n", argv[0]);
+"USAGE 1: %s [input_file] [command_1] ... [command_n] [output_file]\n", argv[0]);
+		ft_printf(\
+"USAGE 2: %s here_doc [limiter] [command_1] ... [command_n] [output_file]\n", argv[0]);
 		exit(EXIT_SUCCESS);
 	}
 	pip_error_exit_if(pip, "Too few arguments", argc < 5);
-	pip_error_exit_if(pip, "Too many arguments", argc > 5);
 }
 
 static void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp)

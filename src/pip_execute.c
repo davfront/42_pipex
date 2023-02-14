@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/14 15:02:04 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/16 12:23:54 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	pip_execute(t_pip *pip, char *cmd, char **envp)
 
 	cmd_argv = ft_split(cmd, ' ');
 	cmd_path = pip_get_binary_path(cmd_argv[0], envp);
-	if (execve(cmd_path, cmd_argv, envp) == -1)
+	if (!cmd_path || execve(cmd_path, cmd_argv, envp) == -1)
 	{
 		ft_putstr_fd("Command not found: ", STDERR_FILENO);
 		ft_putstr_fd(cmd_argv[0], STDERR_FILENO);

@@ -47,18 +47,23 @@ NAME				=	pipex
 SRCS_DIR			=	./src
 OBJS_DIR			=	./obj
 
-SRCS_FILES			=	\
-						pip_init.c\
-						pip_reset.c\
-						pip_error_exit.c\
-						pip_perror_exit.c\
-						pip_get_input.c\
+SRCS_COMMON_FILES	=	\
+						utils/pip_init.c\
+						utils/pip_reset.c\
+						utils/pip_error_exit.c\
+						utils/pip_perror_exit.c\
 						pip_execute.c\
-						pipex.c\
+						pip_pipe.c\
 
+SRCS_FILES			=	$(SRCS_COMMON_FILES) pipex.c
 SRCS				=	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 OBJS_FILES			=	$(SRCS_FILES:.c=.o)
 OBJS				=	$(addprefix $(OBJS_DIR)/, $(OBJS_FILES))
+
+SRCS_BONUS_FILES	=	$(SRCS_COMMON_FILES) pipex_bonus.c
+SRCS_BONUS			=	$(addprefix $(SRCS_DIR)/, $(SRCS_BONUS_FILES))
+OBJS_BONUS_FILES	=	$(SRCS_BONUS_FILES:.c=.o)
+OBJS_BONUS			=	$(addprefix $(OBJS_DIR)/, $(OBJS_BONUS_FILES))
 
 HEADER_DIR			=	./include
 HEADER				=	$(HEADER_DIR)/pipex.h
@@ -81,6 +86,13 @@ $(NAME):			$(OBJS) $(FT)
 					@$(ECHO) "$(GREEN)[create]$(EOC) $@"
 					@$(CC) $(CFLAGS) $(OBJS) $(FT_FLAGS) -o $(NAME)
 					@$(ECHO) "$(GREEN_BOLD)✓ $(NAME) is ready!$(EOC)"
+
+.PHONY: bonus
+bonus:				$(OBJS_BONUS) $(FT)
+					@$(ECHO) "$(GREEN)[create]$(EOC) $@"
+					@$(CC) $(CFLAGS) $(OBJS_BONUS) $(FT_FLAGS) -o $(NAME)
+					@touch $(SRCS_DIR)/pipex.c
+					@$(ECHO) "$(GREEN_BOLD)✓ $(NAME) (bonus) is ready!$(EOC)"
 
 $(FT):
 					@$(ECHO) "$(CYAN)[enter directory]$(EOC) $(FT_DIR)"

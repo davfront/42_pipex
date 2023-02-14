@@ -1,22 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pip_init.c                                         :+:      :+:    :+:   */
+/*   pip_reset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/14 10:57:31 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/14 11:10:13 by dapereir         ###   ########.fr       */
+/*   Created: 2023/02/14 10:53:39 by dapereir          #+#    #+#             */
+/*   Updated: 2023/02/16 12:21:01 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	pip_init(t_pip *pip)
+void	pip_reset(t_pip *pip)
 {
-	pip->fd_in = -1;
-	pip->fd_out = -1;
-	pip->cmd1 = NULL;
-	pip->cmd2 = NULL;
-	pip->envp = NULL;
+	int	i;
+
+	if (pip->fd_in != -1)
+		close(pip->fd_in);
+	if (pip->fd_out != -1)
+		close(pip->fd_out);
+	ft_free((void **)&pip->cmd);
+	if (pip->fd_pipe)
+	{
+		i = 0;
+		while (i < 2 * (pip->cmd_size - 1))
+		{
+			if (pip->fd_pipe[i] != -1)
+				close(pip->fd_pipe[i]);
+			i++;
+		}
+		ft_free((void **)&pip->fd_pipe);
+	}
 }
