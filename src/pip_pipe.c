@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/16 11:49:35 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:03:15 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,15 @@ static void	pip_child_process(t_pip *pip, int level)
 	}
 	dup2(fd_in, STDIN_FILENO);
 	close(fd_in);
+	if (pip->here_doc)
+		unlink(HEREDOC_FILE);
 	pip_execute(pip, pip->cmd[level], pip->envp);
-	exit(EXIT_FAILURE);
 }
 
 static void	pip_parent_process(t_pip *pip, int level)
 {
 	int	status;
-	int		*fd_pipe;
+	int	*fd_pipe;
 
 	fd_pipe = pip->fd_pipe + 2 * level;
 	close(fd_pipe[1]);
@@ -51,7 +52,6 @@ static void	pip_parent_process(t_pip *pip, int level)
 		close(pip->fd_out);
 		pip_execute(pip, pip->cmd[level + 1], pip->envp);
 	}
-	exit(EXIT_FAILURE);
 }
 
 void	pip_pipe(t_pip *pip, int level)

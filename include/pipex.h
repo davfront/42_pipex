@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/16 12:05:27 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:06:42 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@
 # include <errno.h>
 # include <sys/wait.h>
 
+# define HEREDOC_FILE	".heredoc"
+# define HEREDOC_HEAD	"pipe heredoc> "
+
 typedef struct s_pip {
+	int		here_doc;
+	char	*limiter;
 	int		fd_in;
 	int		fd_out;
 	int		cmd_size;

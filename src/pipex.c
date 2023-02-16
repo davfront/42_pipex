@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/16 12:18:21 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:09:36 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ int	main(int argc, char **argv, char **envp)
 	pip_check_input(&pip, argc, argv);
 	pip_get_input(&pip, argc, argv, envp);
 	pip_pipe(&pip, 0);
+	pip_reset(&pip);
 	return (EXIT_SUCCESS);
 }
