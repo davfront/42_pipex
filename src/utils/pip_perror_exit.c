@@ -6,13 +6,13 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 15:05:20 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/16 16:09:18 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:58:01 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	pip_perror_exit(t_pip *pip, char *msg)
+void	pip_perror(char *msg)
 {
 	ft_putstr_fd(strerror(errno), STDERR_FILENO);
 	if (msg && *msg)
@@ -21,6 +21,11 @@ void	pip_perror_exit(t_pip *pip, char *msg)
 		ft_putstr_fd(msg, STDERR_FILENO);
 	}
 	ft_putstr_fd("\n", STDERR_FILENO);
+}
+
+void	pip_perror_exit(t_pip *pip, char *msg)
+{
+	pip_perror(msg);
 	pip_reset(pip);
 	exit(EXIT_FAILURE);
 }
