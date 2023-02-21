@@ -52,6 +52,7 @@ SRCS_COMMON_FILES	=	\
 						utils/pip_reset.c\
 						utils/pip_error_exit.c\
 						utils/pip_perror_exit.c\
+						pip_parse_cmd_args.c\
 						pip_execute.c\
 						pip_pipe.c\
 

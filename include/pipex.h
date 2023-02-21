@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/16 16:57:50 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:10:44 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	pip_error_exit_if(t_pip *pip, char *msg, int condition);
 void	pip_perror(char *msg);
 void	pip_perror_exit(t_pip *pip, char *msg);
 void	pip_perror_exit_if(t_pip *pip, char *msg, int condition);
+char	**pip_parse_cmd_args(char const *s);
 void	pip_execute(t_pip *pip, char *cmd, char **envp);
 void	pip_pipe(t_pip *pip, int level);
 
