@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/21 16:00:08 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/22 12:10:39 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,9 @@ void	pip_execute(t_pip *pip, char *cmd, char **envp)
 	char	*cmd_path;
 
 	cmd_argv = pip_parse_cmd_args(cmd);
+	cmd_path = cmd_argv[0];
+	if (ft_strncmp("./", cmd_argv[0], 2) == 0)
+		cmd_path += 2;
 	if (execve(cmd_argv[0], cmd_argv, envp) != -1)
 	{
 		ft_free_split(cmd_argv);
