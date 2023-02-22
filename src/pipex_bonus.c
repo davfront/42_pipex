@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/16 17:03:20 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:37:47 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	pip_create_heredoc_file(t_pip *pip)
 	}
 	ft_free((void **)&line);
 	if (close(fd_in) == -1)
-		pip_perror(HEREDOC_FILE);
+		pip_perror_exit(pip, HEREDOC_FILE);
 }
 
 static void	pip_get_input_data(t_pip *pip, char **argv)
@@ -62,8 +62,8 @@ static void	pip_get_input_data(t_pip *pip, char **argv)
 		pip->fd_in = open(HEREDOC_FILE, O_RDONLY);
 		if (pip->fd_in == -1)
 		{
-			pip_perror(HEREDOC_FILE);
 			unlink(HEREDOC_FILE);
+			pip_perror_exit(pip, HEREDOC_FILE);
 		}
 	}
 	else
@@ -82,7 +82,7 @@ static void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp)
 	pip_get_input_data(pip, argv);
 	pip->fd_out = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (pip->fd_out == -1)
-		pip_perror(argv[argc - 1]);
+		pip_perror_exit(pip, argv[argc - 1]);
 	pip->cmd_size = argc - 3 - pip->here_doc;
 	pip->cmd = ft_calloc(pip->cmd_size, sizeof(char *));
 	i = 0;
