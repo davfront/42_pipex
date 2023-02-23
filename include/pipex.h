@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/22 13:06:48 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:28:45 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include <libft.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include <string.h>
-# include <errno.h>
 # include <sys/wait.h>
 
 # define HEREDOC_FILE	".heredoc"
