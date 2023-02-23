@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/23 17:13:44 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/23 21:37:52 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static void	pip_child_process_2(t_pip *pip, int level)
 	else if (pip->cmd_size - level == 2)
 	{
 		dup2(fd_pipe[0], STDIN_FILENO);
+		if (pip->fd_out == -1)
+			pip_error_exit(pip, NULL);
 		dup2(pip->fd_out, STDOUT_FILENO);
 		close(pip->fd_out);
 		pip_execute(pip, pip->cmd[level + 1], pip->envp);

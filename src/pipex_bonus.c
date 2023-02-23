@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/23 21:03:51 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/23 21:58:19 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp)
 	pip_get_input_data(pip, argv);
 	pip->fd_out = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (pip->fd_out == -1)
-		pip_perror_exit(pip, argv[argc - 1]);
+		perror(argv[argc - 1]);
 	pip->cmd_size = argc - 3 - pip->here_doc;
 	pip->cmd = ft_calloc(pip->cmd_size, sizeof(char *));
 	i = 0;
