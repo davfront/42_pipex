@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/23 21:58:19 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/23 23:04:09 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	pip_create_heredoc_file(t_pip *pip)
 		pip_perror_exit(pip, HEREDOC_FILE);
 	ft_putstr_fd(HEREDOC_HEAD, fd_in);
 	line = ft_gnl(fd_in);
-	while (line && ft_strncmp(line, pip->limiter, ft_strlen(line) - 1) != 0)
+	while (line && ft_strncmp(line, pip->limiter, ft_strlen(pip->limiter) - 1))
 	{
 		ft_putstr_fd(line, fd_out);
 		ft_free((void **)&line);
