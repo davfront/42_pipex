@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/23 15:25:41 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/23 21:03:26 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp)
 
 	pip->fd_in = open(argv[1], O_RDONLY);
 	if (pip->fd_in == -1)
-		pip_perror_exit(pip, argv[1]);
+		perror(argv[1]);
 	pip->fd_out = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (pip->fd_out == -1)
 		pip_perror_exit(pip, argv[argc - 1]);
@@ -56,11 +56,14 @@ static void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_pip	pip;
+	int		status;
 
 	pip_init(&pip);
 	pip_check_input(&pip, argc, argv);
 	pip_get_input(&pip, argc, argv, envp);
-	pip_pipe(&pip, 0);
+	status = pip_pipe(&pip, 0);
 	pip_reset(&pip);
+	if (WIFEXITED(status))
+		exit(WEXITSTATUS(status));
 	return (EXIT_SUCCESS);
 }

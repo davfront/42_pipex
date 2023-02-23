@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/22 15:37:47 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/23 21:03:51 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	pip_get_input_data(t_pip *pip, char **argv)
 	{
 		pip->fd_in = open(argv[1], O_RDONLY);
 		if (pip->fd_in == -1)
-			pip_perror(argv[1]);
+			perror(argv[1]);
 	}
 }
 
@@ -104,11 +104,14 @@ static void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_pip	pip;
+	int		status;
 
 	pip_init(&pip);
 	pip_check_input(&pip, argc, argv);
 	pip_get_input(&pip, argc, argv, envp);
-	pip_pipe(&pip, 0);
+	status = pip_pipe(&pip, 0);
 	pip_reset(&pip);
+	if (WIFEXITED(status))
+		exit(WEXITSTATUS(status));
 	return (EXIT_SUCCESS);
 }

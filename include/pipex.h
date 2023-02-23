@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/23 15:28:45 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/23 17:13:49 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <sys/wait.h>
+
+# define EXIT_COMMAND_FAILURE	127
 
 # define HEREDOC_FILE	".heredoc"
 # define HEREDOC_HEAD	"pipe heredoc> "
@@ -44,6 +46,6 @@ size_t	pip_count_cmd_args(char const *s);
 char	*pip_get_cmd_arg(char const *s);
 char	**pip_parse_cmd_args(char const *s);
 void	pip_execute(t_pip *pip, char *cmd, char **envp);
-void	pip_pipe(t_pip *pip, int level);
+int		pip_pipe(t_pip *pip, int level);
 
 #endif
