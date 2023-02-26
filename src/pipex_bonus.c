@@ -41,7 +41,7 @@ static void	pip_create_heredoc_file(t_pip *pip)
 		pip_perror_exit(pip, HEREDOC_FILE);
 	ft_putstr_fd(HEREDOC_HEAD, fd_in);
 	line = ft_gnl(fd_in);
-	while (line && ft_strncmp(line, pip->limiter, ft_strlen(pip->limiter) - 1))
+	while (line && !ft_streq(line, pip->limiter))
 	{
 		ft_putstr_fd(line, fd_out);
 		ft_free((void **)&line);
@@ -57,7 +57,7 @@ static void	pip_get_input_data(t_pip *pip, char **argv)
 {
 	if (pip->here_doc)
 	{
-		pip->limiter = argv[2];
+		pip->limiter = ft_strjoin(argv[2], "\n");
 		pip_create_heredoc_file(pip);
 		pip->fd_in = open(HEREDOC_FILE, O_RDONLY);
 		if (pip->fd_in == -1)

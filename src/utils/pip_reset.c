@@ -32,4 +32,5 @@ void	pip_reset(t_pip *pip)
 		}
 		ft_free((void **)&pip->fd_pipe);
 	}
+	ft_free((void **)&pip->limiter);
 }
