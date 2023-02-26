@@ -81,6 +81,7 @@ int	pip_pipe(t_pip *pip, int level)
 		pip_child_process_2(pip, level);
 	close(fd_pipe[0]);
 	close(fd_pipe[1]);
+	status = 0;
 	waitpid(cpid_1, &status, 0);
 	waitpid(cpid_2, &status, 0);
 	return (status);
