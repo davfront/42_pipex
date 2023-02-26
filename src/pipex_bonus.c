@@ -31,29 +31,26 @@ static void	pip_check_input(t_pip *pip, int argc, char **argv)
 
 static void	pip_create_heredoc_file(t_pip *pip)
 {
-	int		fd_in;
 	int		fd_out;
 	char	*line;
 
-	fd_in = dup(STDIN_FILENO);
 	fd_out = open(HEREDOC_FILE, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd_out == -1)
 		pip_perror_exit(pip, HEREDOC_FILE);
-	ft_putstr_fd(HEREDOC_HEAD, fd_in);
-	line = ft_gnl(fd_in);
+	ft_putstr_fd(HEREDOC_HEAD, STDIN_FILENO);
+	line = ft_gnl(STDIN_FILENO);
 	while (line && !ft_streq(line, pip->limiter))
 	{
 		ft_putstr_fd(line, fd_out);
 		ft_free((void **)&line);
-		ft_putstr_fd(HEREDOC_HEAD, fd_in);
-		line = ft_gnl(fd_in);
+		ft_putstr_fd(HEREDOC_HEAD, STDIN_FILENO);
+		line = ft_gnl(STDIN_FILENO);
 	}
 	ft_free((void **)&line);
-	if (close(fd_in) == -1)
-		pip_perror_exit(pip, HEREDOC_FILE);
+	close(fd_out);
 }
 
-static void	pip_get_input_data(t_pip *pip, char **argv)
+static void	pip_open_input_output(t_pip *pip, int argc, char **argv)
 {
 	if (pip->here_doc)
 	{
@@ -61,17 +58,18 @@ static void	pip_get_input_data(t_pip *pip, char **argv)
 		pip_create_heredoc_file(pip);
 		pip->fd_in = open(HEREDOC_FILE, O_RDONLY);
 		if (pip->fd_in == -1)
-		{
-			unlink(HEREDOC_FILE);
-			pip_perror_exit(pip, HEREDOC_FILE);
-		}
+			perror(HEREDOC_FILE);
+		pip->fd_out = open(argv[argc - 1], O_CREAT | O_RDWR | O_APPEND, 0644);
 	}
 	else
 	{
 		pip->fd_in = open(argv[1], O_RDONLY);
 		if (pip->fd_in == -1)
 			perror(argv[1]);
+		pip->fd_out = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	}
+	if (pip->fd_out == -1)
+		perror(argv[argc - 1]);
 }
 
 static void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp)
@@ -79,10 +77,7 @@ static void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp)
 	int	i;
 
 	pip->here_doc = ft_streq(argv[1], "here_doc");
-	pip_get_input_data(pip, argv);
-	pip->fd_out = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if (pip->fd_out == -1)
-		perror(argv[argc - 1]);
+	pip_open_input_output(pip, argc, argv);
 	pip->cmd_size = argc - 3 - pip->here_doc;
 	pip->cmd = ft_calloc(pip->cmd_size, sizeof(char *));
 	i = 0;

@@ -21,6 +21,7 @@ static void	pip_child_process_1(t_pip *pip, int level)
 	fd_pipe = pip->fd_pipe + 2 * level;
 	close(fd_pipe[0]);
 	dup2(fd_pipe[1], STDOUT_FILENO);
+	close(fd_pipe[1]);
 	if (level == 0)
 	{
 		if (pip->fd_in == -1)
@@ -34,9 +35,8 @@ static void	pip_child_process_1(t_pip *pip, int level)
 	}
 	dup2(fd_in, STDIN_FILENO);
 	close(fd_in);
-	if (pip->here_doc)
-		unlink(HEREDOC_FILE);
 	pip_execute(pip, pip->cmd[level], pip->envp);
+	unlink(HEREDOC_FILE);
 }
 
 static void	pip_child_process_2(t_pip *pip, int level)
@@ -50,6 +50,7 @@ static void	pip_child_process_2(t_pip *pip, int level)
 	else if (pip->cmd_size - level == 2)
 	{
 		dup2(fd_pipe[0], STDIN_FILENO);
+		close(fd_pipe[0]);
 		if (pip->fd_out == -1)
 			pip_error_exit(pip, NULL);
 		dup2(pip->fd_out, STDOUT_FILENO);
