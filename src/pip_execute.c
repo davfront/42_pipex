@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/28 17:13:53 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/28 20:41:59 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,16 @@ static char	*pip_get_binary_path(char *cmd, char **envp)
 	return (NULL);
 }
 
+static void	pip_cmdnotfound_exit(t_pip *pip, char *cmd_path, char **cmd_argv)
+{
+	ft_putstr_fd(cmd_argv[0], STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	ft_free((void **)&cmd_path);
+	ft_free_split(cmd_argv);
+	pip_reset(pip);
+	exit(EXIT_COMMAND_FAILURE);
+}
+
 void	pip_execute(t_pip *pip, char *cmd, char **envp)
 {
 	char	**cmd_argv;
@@ -70,16 +80,11 @@ void	pip_execute(t_pip *pip, char *cmd, char **envp)
 		ft_free_split(cmd_argv);
 		return ;
 	}
-	cmd_path = pip_get_binary_path(cmd_argv[0], envp);
+	cmd_path = NULL;
+	if (!ft_strchr(cmd_argv[0], '/'))
+		cmd_path = pip_get_binary_path(cmd_argv[0], envp);
 	if (!cmd_path || execve(cmd_path, cmd_argv, envp) == -1)
-	{
-		ft_putstr_fd(cmd_argv[0], STDERR_FILENO);
-		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-		ft_free((void **)&cmd_path);
-		ft_free_split(cmd_argv);
-		pip_reset(pip);
-		exit(EXIT_COMMAND_FAILURE);
-	}
+		pip_cmdnotfound_exit(pip, cmd_path, cmd_argv);
 	ft_free((void **)&cmd_path);
 	ft_free_split(cmd_argv);
 }

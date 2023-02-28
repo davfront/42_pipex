@@ -1,11 +1,12 @@
-## Tests to check
+## Tests
 
-```
-./pipex infile "/ls" "/cat" outfile
-./pipex infile "" "wc -l" outfile 
-./pipex infile "ls" "" outfile
-./pipex inpufile "cd .." "ls" output 
-```
+- [x] `./pipex infile "/ls" "/cat" outfile`
+
+- [x] `./pipex infile "" "wc -l" outfile `
+
+- [x] `./pipex infile "ls" "" outfile`
+
+- [ ] `./pipex inpufile "cd .." "ls" output `
 
 ## Fixes
 
