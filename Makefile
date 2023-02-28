@@ -56,13 +56,14 @@ SRCS_COMMON_FILES	=	\
 						pip_parse_cmd_args_2.c\
 						pip_execute.c\
 						pip_pipe.c\
+						main.c\
 
-SRCS_FILES			=	$(SRCS_COMMON_FILES) pipex.c
+SRCS_FILES			=	$(SRCS_COMMON_FILES) pip_get_input.c
 SRCS				=	$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 OBJS_FILES			=	$(SRCS_FILES:.c=.o)
 OBJS				=	$(addprefix $(OBJS_DIR)/, $(OBJS_FILES))
 
-SRCS_BONUS_FILES	=	$(SRCS_COMMON_FILES) pipex_bonus.c
+SRCS_BONUS_FILES	=	$(SRCS_COMMON_FILES) pip_get_input_bonus.c
 SRCS_BONUS			=	$(addprefix $(SRCS_DIR)/, $(SRCS_BONUS_FILES))
 OBJS_BONUS_FILES	=	$(SRCS_BONUS_FILES:.c=.o)
 OBJS_BONUS			=	$(addprefix $(OBJS_DIR)/, $(OBJS_BONUS_FILES))
@@ -93,7 +94,7 @@ $(NAME):			$(OBJS) $(FT)
 bonus:				$(OBJS_BONUS) $(FT)
 					@$(ECHO) "$(GREEN)[create]$(EOC) $@"
 					@$(CC) $(CFLAGS) $(OBJS_BONUS) $(FT_FLAGS) -o $(NAME)
-					@touch $(SRCS_DIR)/pipex.c
+					@touch $(SRCS_DIR)/main.c
 					@$(ECHO) "$(GREEN_BOLD)✓ $(NAME) (bonus) is ready!$(EOC)"
 
 $(FT):

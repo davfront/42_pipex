@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*   pip_get_input_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/28 17:14:04 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/02/28 17:18:23 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,11 @@ static void	pip_open_input_output(t_pip *pip, int argc, char **argv)
 		perror(argv[argc - 1]);
 }
 
-static void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp)
+void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp)
 {
 	int	i;
 
+	pip_check_input(pip, argc, argv);
 	pip->here_doc = ft_streq(argv[1], "here_doc");
 	pip_open_input_output(pip, argc, argv);
 	pip->cmd_size = argc - 3 - pip->here_doc;
@@ -94,19 +95,4 @@ static void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp)
 		i++;
 	}
 	pip->envp = envp;
-}
-
-int	main(int argc, char **argv, char **envp)
-{
-	t_pip	pip;
-	int		status;
-
-	pip_init(&pip);
-	pip_check_input(&pip, argc, argv);
-	pip_get_input(&pip, argc, argv, envp);
-	status = pip_pipe(&pip, 0);
-	pip_reset(&pip);
-	if (WIFEXITED(status))
-		exit(WEXITSTATUS(status));
-	return (EXIT_SUCCESS);
 }

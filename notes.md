@@ -7,16 +7,18 @@
 ./pipex inpufile "cd .." "ls" output 
 ```
 
-protect mallocs carefully: ft_strjoin ft_strdup ft_calloc dup2
+## Fixes
 
-manage libft dependencies
+- [ ] protect mallocs carefully: ft_strjoin ft_strdup ft_calloc dup2
 
-keep name of main.c
+- [ ] manage libft dependencies
 
-limit cmd size (64 for exemple)
+- [x] keep name of main.c
 
-lancer toutes les commandes en parrallele
+- [ ] limit cmd size (64 for exemple)
 
-distiguer le waitpid de la derniere commande pour l'EXITCODE
+- [ ] lancer toutes les commandes en parrallele
 
-pas besoin d' un tableau de fd_pipe (2 ou 4 suffisent)
+- [ ] distiguer le waitpid de la derniere commande pour l'EXITCODE
+
+- [ ] pas besoin d' un tableau de fd_pipe (2 ou 4 suffisent)
