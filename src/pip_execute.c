@@ -6,11 +6,34 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/28 20:41:59 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/01 15:40:30 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+static char	**pip_append_backslash_to_pathes(char **pathes)
+{
+	int		i;
+	char	*new_path;
+
+	if (!pathes)
+		return (NULL);
+	i = 0;
+	while (pathes[i])
+	{
+		new_path = ft_strjoin(pathes[i], "/");
+		if (!new_path)
+		{
+			ft_free_split(pathes);
+			return (NULL);
+		}
+		ft_free((void **)(pathes + i));
+		pathes[i] = new_path;
+		i++;
+	}
+	return (pathes);
+}
 
 static char	**pip_get_env_pathes(char **envp)
 {
@@ -21,18 +44,20 @@ static char	**pip_get_env_pathes(char **envp)
 		if (ft_strnstr(*envp, "PATH=", 5) == *envp)
 		{
 			pathes = ft_split(*envp + 5, ':');
+			pathes = pip_append_backslash_to_pathes(pathes);
 			return (pathes);
 		}
 		envp++;
 	}
-	return (NULL);
+	pathes = ft_split("/usr/local/bin:/usr/bin:/bin", ':');
+	pathes = pip_append_backslash_to_pathes(pathes);
+	return (pathes);
 }
 
 static char	*pip_get_binary_path(char *cmd, char **envp)
 {
 	char	**pathes;
 	int		i;
-	char	*dir_path;
 	char	*cmd_path;
 
 	pathes = pip_get_env_pathes(envp);
@@ -41,10 +66,8 @@ static char	*pip_get_binary_path(char *cmd, char **envp)
 	i = 0;
 	while (pathes[i])
 	{
-		dir_path = ft_strjoin(pathes[i], "/");
-		cmd_path = ft_strjoin(dir_path, cmd);
-		ft_free((void **)&dir_path);
-		if (!access(cmd_path, F_OK))
+		cmd_path = ft_strjoin(pathes[i], cmd);
+		if (!cmd_path || !access(cmd_path, F_OK))
 		{
 			ft_free_split(pathes);
 			return (cmd_path);
@@ -73,8 +96,6 @@ void	pip_execute(t_pip *pip, char *cmd, char **envp)
 
 	cmd_argv = pip_parse_cmd_args(cmd);
 	cmd_path = cmd_argv[0];
-	if (ft_strncmp("./", cmd_argv[0], 2) == 0)
-		cmd_path += 2;
 	if (execve(cmd_path, cmd_argv, envp) != -1)
 	{
 		ft_free_split(cmd_argv);
