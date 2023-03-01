@@ -92,15 +92,18 @@ $(NAME):			$(OBJS) $(FT)
 
 .PHONY: bonus
 bonus:				$(OBJS_BONUS) $(FT)
-					@$(ECHO) "$(GREEN)[create]$(EOC) $@"
+					@$(ECHO) "$(GREEN)[create]$(EOC) $(NAME)"
 					@$(CC) $(CFLAGS) $(OBJS_BONUS) $(FT_FLAGS) -o $(NAME)
-					@touch $(SRCS_DIR)/main.c
+					@touch $(SRCS_DIR)/pip_get_input.c
 					@$(ECHO) "$(GREEN_BOLD)✓ $(NAME) (bonus) is ready!$(EOC)"
 
-$(FT):
-					@$(ECHO) "$(CYAN)[enter directory]$(EOC) $(FT_DIR)"
-					@$(MAKE) --no-print-directory -C $(FT_DIR)
-					@$(ECHO) "$(CYAN)[leave directory]$(EOC) $(FT_DIR)"
+.PHONY: libft
+libft:
+					@$(ECHO) "$(CYAN)[libft]$(EOC) Enter directory"
+					@$(MAKE) --no-print-directory -C $(FT_DIR) | sed "s/^make\[[0-9]\]: //;s/^/\x1b[36m[libft]\x1b[0m /"
+					@$(ECHO) "$(CYAN)[libft]$(EOC) Leave directory"
+
+$(FT):				libft
 
 .PHONY: clean
 clean:
