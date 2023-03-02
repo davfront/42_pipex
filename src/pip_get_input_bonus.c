@@ -38,15 +38,16 @@ static void	pip_create_heredoc_file(t_pip *pip)
 	if (fd_out == -1)
 		pip_perror_exit(pip, HEREDOC_FILE);
 	ft_putstr_fd(HEREDOC_HEAD, STDIN_FILENO);
-	line = ft_gnl(STDIN_FILENO);
+	line = ft_gnl(STDIN_FILENO, 0);
 	while (line && !ft_streq(line, pip->limiter))
 	{
 		ft_putstr_fd(line, fd_out);
 		ft_free((void **)&line);
 		ft_putstr_fd(HEREDOC_HEAD, STDIN_FILENO);
-		line = ft_gnl(STDIN_FILENO);
+		line = ft_gnl(STDIN_FILENO, 0);
 	}
 	ft_free((void **)&line);
+	ft_gnl(STDIN_FILENO, 1);
 	close(fd_out);
 }
 

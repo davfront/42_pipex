@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_gnl.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:50:08 by dapereir          #+#    #+#             */
-/*   Updated: 2022/11/28 10:29:15 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:32:37 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@
 #  define OPEN_MAX 256
 # endif
 
-char	*ft_gnl(int fd);
+char	*ft_gnl(int fd, int free_store);
 
 #endif

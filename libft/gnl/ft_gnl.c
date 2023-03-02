@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   ft_gnl.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dapereir <dapereir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:50:06 by dapereir          #+#    #+#             */
-/*   Updated: 2022/11/28 12:31:20 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:36:42 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,18 @@ static char	*gnl_extract_line(char **store, char *breakline)
 	return (line);
 }
 
-char	*ft_gnl(int fd)
+char	*ft_gnl(int fd, int free_store)
 {
 	static char		*store[OPEN_MAX];
 	char			*breakline;
 	int				buffer_size;
 	char			*line;
 
+	if (free_store)
+	{
+		free(store[fd]);
+		return (NULL);
+	}
 	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1)
 		return (NULL);
 	if (!store[fd])
