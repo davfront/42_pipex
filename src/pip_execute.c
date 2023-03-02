@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/01 15:40:30 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:43:04 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,16 @@ static char	**pip_get_env_pathes(char **envp)
 		if (ft_strnstr(*envp, "PATH=", 5) == *envp)
 		{
 			pathes = ft_split(*envp + 5, ':');
+			if (!pathes)
+				ft_putendl_fd("ft_split failed", STDERR_FILENO);
 			pathes = pip_append_backslash_to_pathes(pathes);
 			return (pathes);
 		}
 		envp++;
 	}
 	pathes = ft_split("/usr/local/bin:/usr/bin:/bin", ':');
+	if (!pathes)
+		ft_putendl_fd("ft_split failed", STDERR_FILENO);
 	pathes = pip_append_backslash_to_pathes(pathes);
 	return (pathes);
 }
@@ -60,6 +64,8 @@ static char	*pip_get_binary_path(char *cmd, char **envp)
 	int		i;
 	char	*cmd_path;
 
+	if (!envp)
+		return (NULL);
 	pathes = pip_get_env_pathes(envp);
 	if (!pathes)
 		return (NULL);
