@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/28 17:18:23 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:17:03 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp)
 	pip_open_input_output(pip, argc, argv);
 	pip->cmd_size = argc - 3 - pip->here_doc;
 	pip->cmd = ft_calloc(pip->cmd_size, sizeof(char *));
+	pip_error_exit_if(pip, "ft_calloc failed", !pip->cmd);
 	i = 0;
 	while (i < pip->cmd_size)
 	{
@@ -88,6 +89,7 @@ void	pip_get_input(t_pip *pip, int argc, char **argv, char **envp)
 		i++;
 	}
 	pip->fd_pipe = ft_calloc(2 * (pip->cmd_size - 1), sizeof(int));
+	pip_error_exit_if(pip, "ft_calloc failed", !pip->fd_pipe);
 	i = 0;
 	while (i < 2 * (pip->cmd_size - 1))
 	{
