@@ -18,7 +18,7 @@
 
 - [x] limit cmd size (64 for exemple)
 
-- [ ] lancer toutes les commandes en parrallele
+- [x] lancer toutes les commandes en parrallele
 
-- [ ] distiguer le waitpid de la derniere commande pour l'EXITCODE
+- [x] distiguer le waitpid de la derniere commande pour l'EXITCODE
 

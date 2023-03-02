@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/02/28 17:17:56 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/02 18:01:22 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **envp)
 
 	pip_init(&pip);
 	pip_get_input(&pip, argc, argv, envp);
-	status = pip_pipe(&pip, 0);
+	status = pip_pipe(&pip);
 	pip_reset(&pip);
 	if (WIFEXITED(status))
 		exit(WEXITSTATUS(status));
