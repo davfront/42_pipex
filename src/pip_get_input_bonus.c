@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/02 17:33:20 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:52:38 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ static void	pip_check_input(t_pip *pip, int argc, char **argv)
 	}
 	if (argc < 5 + ft_streq(argv[1], "here_doc"))
 		pip_error_exit(pip, "Too few arguments");
+	if (argc > 3 + CMD_MAX + ft_streq(argv[1], "here_doc"))
+	{
+		ft_putstr_fd("Too many commands (maximum allowed: ", STDERR_FILENO);
+		ft_putnbr_fd(CMD_MAX, STDERR_FILENO);
+		ft_putstr_fd(")\n", STDERR_FILENO);
+		pip_error_exit(pip, NULL);
+	}
 }
 
 static void	pip_create_heredoc_file(t_pip *pip)

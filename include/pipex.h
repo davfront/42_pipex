@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:28:19 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/02 16:13:49 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:54:34 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <sys/wait.h>
 
 # define EXIT_COMMAND_FAILURE	127
+
+# define CMD_MAX	64
 
 # define HEREDOC_FILE	".heredoc"
 # define HEREDOC_HEAD	"pipe heredoc> "

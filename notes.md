@@ -10,16 +10,15 @@
 
 ## Fixes
 
-- [ ] protect mallocs carefully: ft_strjoin ft_strdup ft_calloc dup2
+- [x] protect mallocs carefully: ft_strjoin ft_split ft_calloc dup2
 
-- [ ] manage libft dependencies
+- [x] manage libft dependencies
 
 - [x] keep name of main.c
 
-- [ ] limit cmd size (64 for exemple)
+- [x] limit cmd size (64 for exemple)
 
 - [ ] lancer toutes les commandes en parrallele
 
 - [ ] distiguer le waitpid de la derniere commande pour l'EXITCODE
 
-- [ ] pas besoin d' un tableau de fd_pipe (2 ou 4 suffisent)
