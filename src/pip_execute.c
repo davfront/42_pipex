@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/02 16:43:04 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/02 16:51:50 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static char	**pip_append_backslash_to_pathes(char **pathes)
 		new_path = ft_strjoin(pathes[i], "/");
 		if (!new_path)
 		{
+			ft_putendl_fd("ft_strjoin failed", STDERR_FILENO);
 			ft_free_split(pathes);
 			return (NULL);
 		}
@@ -73,6 +74,8 @@ static char	*pip_get_binary_path(char *cmd, char **envp)
 	while (pathes[i])
 	{
 		cmd_path = ft_strjoin(pathes[i], cmd);
+		if (!cmd_path)
+			ft_putendl_fd("ft_strjoin failed", STDERR_FILENO);
 		if (!cmd_path || !access(cmd_path, F_OK))
 		{
 			ft_free_split(pathes);

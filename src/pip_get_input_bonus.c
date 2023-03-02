@@ -6,7 +6,7 @@
 /*   By: dapereir <dapereir@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 11:25:40 by dapereir          #+#    #+#             */
-/*   Updated: 2023/03/02 16:17:03 by dapereir         ###   ########.fr       */
+/*   Updated: 2023/03/02 17:33:20 by dapereir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ static void	pip_open_input_output(t_pip *pip, int argc, char **argv)
 	if (pip->here_doc)
 	{
 		pip->limiter = ft_strjoin(argv[2], "\n");
+		if (!pip->limiter)
+			pip_error_exit(pip, "ft_strjoin failed");
 		pip_create_heredoc_file(pip);
 		pip->fd_in = open(HEREDOC_FILE, O_RDONLY);
 		if (pip->fd_in == -1)
